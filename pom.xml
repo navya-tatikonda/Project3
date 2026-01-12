@@ -28,7 +28,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.App</mainClass>
+                            <mainClass>com.navya.project3.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
