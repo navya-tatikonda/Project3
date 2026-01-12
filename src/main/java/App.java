@@ -1,8 +1,6 @@
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-
 import com.sun.net.httpserver.HttpServer;
 
 public class App {
@@ -12,10 +10,12 @@ public class App {
 
         server.createContext("/", exchange -> {
             String response = "Hello from Jenkins + Maven + Docker 🚀";
-            exchange.sendResponseHeaders(200, response.length());
+            byte[] bytes = response.getBytes("UTF-8");
+
+            exchange.sendResponseHeaders(200, bytes.length);
             OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close(); 
+            os.write(bytes);
+            os.close();
         });
 
         server.start();
