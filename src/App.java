@@ -1,4 +1,3 @@
-package com.navya.project3;
 
 import java.io.IOException;
 import java.io.OutputStream;
