@@ -1,14 +1,11 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'Maven3'
-        jdk 'JDK11'
-    }
-
+    
     environment {
-        IMAGE_NAME = "jenkins-java-app"
+        IMAGE_NAME = "maven"
         CONTAINER_NAME = "jenkins-java-container"
+        PATH = "/opt/homebrew/bin:/usr/local/bin/docker:${env.PATH}"
+        DOCKERHUB_USERNAME = "navyatatikonda7"
     }
 
     stages {
@@ -28,19 +25,22 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                sh '''
+                /usr/local/bin/docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME .
+                '''
             }
-        }
+         }
+
 
         stage('Deploy Docker Container') {
             steps {
                 sh '''
-                docker stop $CONTAINER_NAME || true
-                docker rm $CONTAINER_NAME || true
-                docker run -d \
-                  --name $CONTAINER_NAME \
-                  -p 8081:8080 \
-                  $IMAGE_NAME
+                /usr/local/bin/docker stop $CONTAINER_NAME || true
+                /usr/local/bin/docker rm $CONTAINER_NAME || true
+                /usr/local/bin/docker run -d \
+                --name $CONTAINER_NAME \
+                -p 8081:8080 \
+                $.DOCKERHUB_USERNAME/$IMAGE_NAME
                 '''
             }
         }
