@@ -9,7 +9,7 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
         server.createContext("/", exchange -> {
-            String response = "Hello from Jenkins + Maven + Docker 🚀";
+            String response = "Hello from Jenkins + Maven + Docker ";
             byte[] bytes = response.getBytes("UTF-8");
 
             exchange.sendResponseHeaders(200, bytes.length);
